@@ -1,0 +1,486 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Florecitas para mi bebé 💛</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: "Segoe UI", cursive, sans-serif;
+      background: linear-gradient(
+        180deg,
+        #fff7b2 0%,
+        #ffe66d 45%,
+        #ffd43b 100%
+      );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 750px;
+      text-align: center;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(8px);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      padding: 35px 25px;
+      border-radius: 30px;
+      box-shadow: 0 15px 40px rgba(120, 90, 0, 0.25);
+      animation: aparecer 1.5s ease;
+    }
+
+    h1 {
+      color: #6b4f00;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 0 rgba(255,255,255,.5);
+    }
+
+    .mensaje-principal {
+      font-size: clamp(1.25rem, 3vw, 1.9rem);
+      color: #5a4300;
+      font-weight: 600;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .flores {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .flor {
+      position: relative;
+      width: 100px;
+      height: 140px;
+      animation: balanceo 3s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+
+    .flor:nth-child(2) {
+      animation-delay: .3s;
+    }
+
+    .flor:nth-child(3) {
+      animation-delay: .6s;
+    }
+
+    .flor:nth-child(4) {
+      animation-delay: .9s;
+    }
+
+    .centro {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      background: #8c5b00;
+      border-radius: 50%;
+      left: 31px;
+      top: 31px;
+      z-index: 3;
+      box-shadow: inset 0 0 8px rgba(0,0,0,.25);
+    }
+
+    .petalo {
+      position: absolute;
+      width: 38px;
+      height: 55px;
+      background: #ffd500;
+      border-radius: 50% 50% 45% 45%;
+      left: 31px;
+      top: 8px;
+      transform-origin: 19px 42px;
+      box-shadow: 0 3px 5px rgba(0,0,0,.08);
+    }
+
+    .petalo:nth-child(1) { transform: rotate(0deg); }
+    .petalo:nth-child(2) { transform: rotate(45deg); }
+    .petalo:nth-child(3) { transform: rotate(90deg); }
+    .petalo:nth-child(4) { transform: rotate(135deg); }
+    .petalo:nth-child(5) { transform: rotate(180deg); }
+    .petalo:nth-child(6) { transform: rotate(225deg); }
+    .petalo:nth-child(7) { transform: rotate(270deg); }
+    .petalo:nth-child(8) { transform: rotate(315deg); }
+
+    .tallo {
+      position: absolute;
+      width: 8px;
+      height: 75px;
+      background: #4c9a2a;
+      left: 46px;
+      top: 65px;
+      border-radius: 10px;
+      z-index: -1;
+    }
+
+    .hoja {
+      position: absolute;
+      width: 32px;
+      height: 17px;
+      background: #62b83f;
+      border-radius: 100% 0 100% 0;
+      top: 95px;
+    }
+
+    .hoja.izq {
+      left: 20px;
+      transform: rotate(25deg);
+    }
+
+    .hoja.der {
+      right: 15px;
+      transform: rotate(65deg);
+    }
+
+    button {
+      margin-top: 10px;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, #ffaf00, #ff7b00);
+      box-shadow: 0 8px 20px rgba(180, 95, 0, 0.35);
+      transition: .3s;
+    }
+
+    button:hover {
+      transform: scale(1.07);
+      box-shadow: 0 12px 25px rgba(180, 95, 0, 0.45);
+    }
+
+    .mensaje-secreto {
+      margin-top: 25px;
+      font-size: clamp(1.15rem, 3vw, 1.7rem);
+      color: #6a3d00;
+      line-height: 1.6;
+      font-weight: 600;
+
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transform: translateY(20px);
+      transition: all 1s ease;
+    }
+
+    .mensaje-secreto.visible {
+      opacity: 1;
+      max-height: 300px;
+      transform: translateY(0);
+    }
+
+    .corazon {
+      position: absolute;
+      bottom: -40px;
+      font-size: 25px;
+      pointer-events: none;
+      animation: subir linear forwards;
+      z-index: 1;
+    }
+
+    .destello {
+      position: absolute;
+      color: white;
+      opacity: .65;
+      animation: brillar 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes balanceo {
+      0%, 100% {
+        transform: rotate(-4deg);
+      }
+      50% {
+        transform: rotate(4deg);
+      }
+    }
+
+    @keyframes subir {
+      0% {
+        transform: translateY(0) scale(.6) rotate(0);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-110vh) scale(1.4) rotate(30deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: scale(.85);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes brillar {
+      from {
+        transform: scale(.7);
+        opacity: .25;
+      }
+
+      to {
+        transform: scale(1.4);
+        opacity: .9;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 28px 15px;
+      }
+
+      .flor {
+        transform: scale(.8);
+        margin: -10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🎵 MÚSICA DE FONDO -->
+  <audio id="musica" loop>
+    <source src="complemento.mp3" type="audio/mpeg">
+  </audio>
+
+
+  <div class="container">
+
+    <h1>💛 Para mi bebé 💛</h1>
+
+    <p class="mensaje-principal">
+      Te amo mi bebé, toma tus florecitas 🌻💛
+    </p>
+
+    <div class="flores">
+
+      <div class="flor">
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="centro"></div>
+        <div class="tallo"></div>
+        <div class="hoja izq"></div>
+        <div class="hoja der"></div>
+      </div>
+
+      <div class="flor">
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="centro"></div>
+        <div class="tallo"></div>
+        <div class="hoja izq"></div>
+        <div class="hoja der"></div>
+      </div>
+
+      <div class="flor">
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="petalo"></div>
+        <div class="centro"></div>
+        <div class="tallo"></div>
+        <div class="hoja izq"></div>
+        <div class="hoja der"></div>
+      </div>
+
+    </div>
+
+    <button onclick="mostrarMensaje()">
+      Toca aquí, mi amor 💛
+    </button>
+
+    <div id="mensaje" class="mensaje-secreto">
+      🌻 Para la niña más linda de mi vida,<br>
+      la reina de mi mundo entero. 👑💛
+      <br><br>
+      Con mucho amor,<br>
+      tu Eveve. 💛
+    </div>
+
+  </div>
+
+  <script>
+
+    function mostrarMensaje() {
+
+      const mensaje =
+        document.getElementById("mensaje");
+
+      const musica =
+        document.getElementById("musica");
+
+      mensaje.classList.toggle("visible");
+
+      /*
+       * La música comienza cuando ella
+       * toca el botón.
+       */
+      musica.play().catch(error => {
+        console.log("No se pudo reproducir la música:", error);
+      });
+
+      crearExplosionCorazones();
+    }
+
+
+    function crearCorazon() {
+
+      const corazon =
+        document.createElement("div");
+
+      const corazones =
+        ["💛", "🌻", "✨", "💖"];
+
+      corazon.className =
+        "corazon";
+
+      corazon.innerHTML =
+        corazones[
+          Math.floor(
+            Math.random() *
+            corazones.length
+          )
+        ];
+
+      corazon.style.left =
+        Math.random() * 100 + "vw";
+
+      corazon.style.fontSize =
+        (Math.random() * 22 + 18) + "px";
+
+      corazon.style.animationDuration =
+        (Math.random() * 4 + 5) + "s";
+
+      document.body.appendChild(
+        corazon
+      );
+
+      setTimeout(() => {
+        corazon.remove();
+      }, 9000);
+    }
+
+
+    setInterval(
+      crearCorazon,
+      700
+    );
+
+
+    function crearExplosionCorazones() {
+
+      for (let i = 0; i < 15; i++) {
+
+        setTimeout(() => {
+
+          const corazon =
+            document.createElement("div");
+
+          corazon.className =
+            "corazon";
+
+          corazon.innerHTML =
+            Math.random() > 0.5
+              ? "💛"
+              : "🌻";
+
+          corazon.style.left =
+            (35 + Math.random() * 30) + "vw";
+
+          corazon.style.animationDuration =
+            (3 + Math.random() * 2) + "s";
+
+          document.body.appendChild(
+            corazon
+          );
+
+          setTimeout(() => {
+            corazon.remove();
+          }, 6000);
+
+        }, i * 100);
+      }
+    }
+
+
+    // Destellos de fondo
+
+    for (let i = 0; i < 20; i++) {
+
+      const estrella =
+        document.createElement("div");
+
+      estrella.className =
+        "destello";
+
+      estrella.innerHTML =
+        "✦";
+
+      estrella.style.left =
+        Math.random() * 100 + "vw";
+
+      estrella.style.top =
+        Math.random() * 100 + "vh";
+
+      estrella.style.fontSize =
+        (Math.random() * 20 + 10) + "px";
+
+      estrella.style.animationDelay =
+        Math.random() * 2 + "s";
+
+      document.body.appendChild(
+        estrella
+      );
+    }
+
+  </script>
+
+</body>
+</html>
+```
